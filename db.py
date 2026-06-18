@@ -3,9 +3,9 @@ import os
 
 def get_db_connection():
     try:
-        # Utilise l'External Connection String de Render que nous avons configuré
         connection = psycopg2.connect(
-            host="dpg-d8q0mshkh4rs73bvtck0-a.ohio-postgres.render.com",
+            # Utilise l'hôte interne fourni par Render (vérifie-le sur ton dashboard)
+            host="dpg-d8q0mshkh4rs73bvtck0-a", 
             database="smartport_gateway",
             user="smartport_gateway_user",
             password="ybzlz0DvNf6MVuwlM7grPnTMC36FRLfw",
