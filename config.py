@@ -1,11 +1,9 @@
-import os
+# config.py
 
 DB_CONFIG = {
-    'host': os.environ.get('DB_HOST', 'localhost'),
-    'user': os.environ.get('DB_USER', 'root'),
-    'password': os.environ.get('DB_PASSWORD', ''),
-    'database': os.environ.get('DB_NAME', 'smartport_gateway'),
-    'auth_plugin': 'mysql_native_password'
+    "host": "dpg-d8q0mshkh4rs73bvtck0-a.ohio-postgres.render.com",
+    "database": "smartport_gateway",
+    "user": "smartport_gateway_user",
+    "password": "ybzlz0DvNf6MVuwlM7grPnTMC36FRLfw",
+    "port": 5432
 }
-
-PORT = int(os.environ.get('PORT', 8000))
