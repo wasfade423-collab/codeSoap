@@ -7,15 +7,13 @@ PORT = int(os.environ.get('PORT', 8000))
 
 class SOAPHandler(BaseHTTPRequestHandler):
     def do_GET(self):
-        if self.path == '/' or self.path == '/?wsdl':
+        if self.path == '/' or '?wsdl' in self.path:
             self.send_response(200)
-            # On indique bien au navigateur que c'est du XML
-            self.send_header('Content-Type', 'application/xml; charset=utf-8')
+            # text/plain force le navigateur à afficher le texte brut sans générer d'erreur de parsing
+            self.send_header('Content-Type', 'text/plain; charset=utf-8')
             self.end_headers()
             
-            # .strip() supprime les espaces et sauts de ligne invisibles au début et à la fin
             clean_wsdl = templates.WSDL_CONTENT.strip()
-            
             self.wfile.write(clean_wsdl.encode('utf-8'))
         else:
             self.send_response(404)

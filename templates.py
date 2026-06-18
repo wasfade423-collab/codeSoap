@@ -9,6 +9,8 @@ SOAP_SUCCESS_RESPONSE = """<?xml version="1.0" encoding="UTF-8"?>
 
 # Fichier WSDL complet et valide à renvoyer si l'utilisateur fait un GET sur l'URL
 WSDL_CONTENT = """<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="SmartPortSoap" targetNamespace="http://smartport.lacotonou.bj/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://smartport.lacotonou.bj/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <wsdl:types>
 <wsdl:definitions name="SmartPortSoap"
     targetNamespace="http://smartport.lacotonou.bj/"
     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
