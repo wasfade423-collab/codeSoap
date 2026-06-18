@@ -1,4 +1,4 @@
-# SmartPort Gateway - API SOAP (Python Pur)
+# SmartPort Gateway - API SOAP (Python)
 
 Ce composant fait partie du système SmartPort Gateway du Port Autonome de Cotonou. Il s'agit d'une API SOAP développée exclusivement en Python 3 sans framework externe. Elle interagit avec la base de données MySQL pour exposer les services d'extraction de données de fret.
 
