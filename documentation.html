@@ -1,10 +1,9 @@
-
 <!doctype html>
 <html lang="fr">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Documentation - SmartPort Gateway API SOAP</title>
+    <title>SmartPort Gateway - Documentation API SOAP</title>
 
     <style>
       * {
@@ -13,24 +12,32 @@
         box-sizing: border-box;
         font-family:
           Segoe UI,
+          Tahoma,
+          Geneva,
+          Verdana,
           sans-serif;
       }
 
       body {
-        background: #f4f7fa;
+        background: #f4f7fb;
         color: #333;
-        line-height: 1.6;
+        line-height: 1.7;
       }
 
       header {
         background: #0d6efd;
         color: white;
-        padding: 40px;
         text-align: center;
+        padding: 50px 20px;
       }
 
       header h1 {
+        font-size: 2.5rem;
         margin-bottom: 10px;
+      }
+
+      header p {
+        font-size: 1.1rem;
       }
 
       .container {
@@ -42,14 +49,19 @@
       .card {
         background: white;
         padding: 25px;
-        margin-bottom: 20px;
-        border-radius: 10px;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        margin-bottom: 25px;
+        border-radius: 12px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
       }
 
       h2 {
         color: #0d6efd;
         margin-bottom: 15px;
+      }
+
+      h3 {
+        margin-bottom: 10px;
+        color: #0d6efd;
       }
 
       ul {
@@ -88,27 +100,42 @@
       }
 
       .endpoint {
-        background: #e9f2ff;
+        background: #eef5ff;
         border-left: 5px solid #0d6efd;
-        padding: 15px;
+        padding: 20px;
         margin-top: 15px;
-        border-radius: 5px;
+        border-radius: 8px;
+      }
+
+      .btn {
+        display: inline-block;
+        margin-top: 15px;
+        padding: 12px 20px;
+        background: #0d6efd;
+        color: white;
+        text-decoration: none;
+        border-radius: 6px;
+        transition: 0.3s;
+      }
+
+      .btn:hover {
+        opacity: 0.9;
       }
 
       footer {
-        text-align: center;
-        padding: 20px;
-        margin-top: 30px;
         background: #0d6efd;
         color: white;
+        text-align: center;
+        padding: 20px;
+        margin-top: 40px;
       }
 
       .badge {
         display: inline-block;
         background: #198754;
         color: white;
-        padding: 5px 10px;
-        border-radius: 5px;
+        padding: 6px 12px;
+        border-radius: 20px;
         margin-top: 10px;
       }
     </style>
@@ -123,22 +150,54 @@
     <div class="container">
       <section class="card">
         <h2>📌 Présentation</h2>
+
         <p>
           SmartPort Gateway est une API SOAP développée en Python permettant la
-          gestion et le suivi des dossiers de transit portuaire. Les données
-          sont stockées dans une base PostgreSQL hébergée sur Render.
+          gestion et le suivi des dossiers de transit portuaire. Elle fournit
+          des services SOAP standardisés pour créer, consulter et suivre des
+          dossiers métier.
+        </p>
+
+        <p>
+          Les données sont stockées dans une base PostgreSQL hébergée sur
+          Render.
         </p>
       </section>
 
       <section class="card">
+        <h2>🌐 URL du Service</h2>
+
+        <p>Le service SOAP est accessible à l'adresse suivante :</p>
+
+        <pre><code>https://codesoap.onrender.com/</code></pre>
+      </section>
+
+      <section class="card">
+        <h2>📄 Contrat WSDL</h2>
+
+        <p>Le contrat WSDL peut être consulté directement via :</p>
+
+        <pre><code>https://codesoap.onrender.com/?wsdl</code></pre>
+
+        <a
+          href="https://codesoap.onrender.com/?wsdl"
+          target="_blank"
+          class="btn"
+        >
+          Consulter le WSDL
+        </a>
+      </section>
+
+      <section class="card">
         <h2>🚀 Fonctionnalités</h2>
+
         <ul>
           <li>Création de dossiers de transit</li>
           <li>Consultation de dossiers</li>
-          <li>Suivi du statut des dossiers</li>
+          <li>Suivi de statut</li>
+          <li>Gestion SOAP XML</li>
           <li>Génération automatique du WSDL</li>
-          <li>Gestion des réponses SOAP XML</li>
-          <li>Création automatique de la base de données</li>
+          <li>Initialisation automatique de la base de données</li>
         </ul>
       </section>
 
@@ -148,12 +207,12 @@
         <table>
           <tr>
             <th>Fichier</th>
-            <th>Rôle</th>
+            <th>Description</th>
           </tr>
 
           <tr>
             <td>server.py</td>
-            <td>Serveur HTTP et gestion des requêtes SOAP</td>
+            <td>Gestion des requêtes HTTP et SOAP</td>
           </tr>
 
           <tr>
@@ -168,7 +227,7 @@
 
           <tr>
             <td>templates.py</td>
-            <td>Templates XML SOAP et contrat WSDL</td>
+            <td>Réponses SOAP et définition du WSDL</td>
           </tr>
         </table>
       </section>
@@ -176,14 +235,12 @@
       <section class="card">
         <h2>🗄️ Structure de la Base de Données</h2>
 
-        <pre><code>
-CREATE TABLE dossiers (
+        <pre><code>CREATE TABLE dossiers (
     id SERIAL PRIMARY KEY,
     reference_metier VARCHAR(255) NOT NULL UNIQUE,
     statut VARCHAR(50) NOT NULL,
     type_operation VARCHAR(100) NOT NULL
-);
-</code></pre>
+);</code></pre>
 
         <table>
           <tr>
@@ -203,7 +260,7 @@ CREATE TABLE dossiers (
 
           <tr>
             <td>statut</td>
-            <td>État actuel du dossier</td>
+            <td>Statut actuel du dossier</td>
           </tr>
 
           <tr>
@@ -214,25 +271,12 @@ CREATE TABLE dossiers (
       </section>
 
       <section class="card">
-        <h2>📄 Accès au WSDL</h2>
-
-        <pre><code>
-GET /?wsdl
-</code></pre>
-
-        <p>
-          Cette route permet aux clients SOAP de récupérer automatiquement le
-          contrat WSDL du service.
-        </p>
-      </section>
-
-      <section class="card">
-        <h2>🔗 Services SOAP</h2>
+        <h2>🔗 Services SOAP Disponibles</h2>
 
         <div class="endpoint">
           <h3>CreateDossier</h3>
 
-          <p>Création d'un nouveau dossier de transit.</p>
+          <p>Création d'un nouveau dossier.</p>
 
           <table>
             <tr>
@@ -279,47 +323,27 @@ GET /?wsdl
       <section class="card">
         <h2>📬 Exemple de Requête SOAP</h2>
 
-        <pre><code>
-&lt;soapenv:Envelope
-xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"&gt;
-
-    &lt;soapenv:Body&gt;
-
-        &lt;CreateDossierRequest&gt;
-
-            &lt;reference_metier&gt;REF001&lt;/reference_metier&gt;
-            &lt;statut&gt;EN_COURS&lt;/statut&gt;
-            &lt;type_operation&gt;IMPORT&lt;/type_operation&gt;
-
-        &lt;/CreateDossierRequest&gt;
-
-    &lt;/soapenv:Body&gt;
-
-&lt;/soapenv:Envelope&gt;
-</code></pre>
+        <pre><code>&lt;soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"&gt;
+   &lt;soapenv:Body&gt;
+      &lt;CreateDossierRequest&gt;
+         &lt;reference_metier&gt;REF001&lt;/reference_metier&gt;
+         &lt;statut&gt;EN_COURS&lt;/statut&gt;
+         &lt;type_operation&gt;IMPORT&lt;/type_operation&gt;
+      &lt;/CreateDossierRequest&gt;
+   &lt;/soapenv:Body&gt;
+&lt;/soapenv:Envelope&gt;</code></pre>
       </section>
 
       <section class="card">
         <h2>📤 Exemple de Réponse SOAP</h2>
 
-        <pre><code>
-&lt;soapenv:Envelope
-xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"&gt;
-
-    &lt;soapenv:Body&gt;
-
-        &lt;CreateDossierResponse&gt;
-
-            &lt;message&gt;
-                Dossier créé avec succès
-            &lt;/message&gt;
-
-        &lt;/CreateDossierResponse&gt;
-
-    &lt;/soapenv:Body&gt;
-
-&lt;/soapenv:Envelope&gt;
-</code></pre>
+        <pre><code>&lt;soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"&gt;
+   &lt;soapenv:Body&gt;
+      &lt;CreateDossierResponse&gt;
+         &lt;message&gt;Dossier créé avec succès&lt;/message&gt;
+      &lt;/CreateDossierResponse&gt;
+   &lt;/soapenv:Body&gt;
+&lt;/soapenv:Envelope&gt;</code></pre>
       </section>
 
       <section class="card">
@@ -327,9 +351,9 @@ xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"&gt;
 
         <ul>
           <li>Référence métier déjà existante</li>
-          <li>Données XML invalides</li>
-          <li>Erreur PostgreSQL</li>
-          <li>Requête SOAP mal formée</li>
+          <li>Données SOAP invalides</li>
+          <li>Connexion PostgreSQL indisponible</li>
+          <li>XML mal formé</li>
           <li>Erreur interne du serveur</li>
         </ul>
       </section>
@@ -343,15 +367,15 @@ xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"&gt;
           <li>XML</li>
           <li>PostgreSQL</li>
           <li>Render</li>
-          <li>HTTP Server Python</li>
+          <li>HTTP Server</li>
         </ul>
       </section>
     </div>
 
     <footer>
-      <p>Développé par Groupe 1 © 2026</p>
+      <p>SmartPort Gateway API SOAP © 2026</p>
+      <p>Développé par Groupe 1 Prjet API © 2026</p>
       <p>Supervisé par MR Osias TOSSOU</p>
     </footer>
   </body>
 </html>
-```

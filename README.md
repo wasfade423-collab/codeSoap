@@ -155,7 +155,7 @@ python server.py
 Le serveur démarre par défaut sur :
 
 ```text
-http://localhost:8000
+http://https://codesoap.onrender.com/
 ```
 
 ---
@@ -171,7 +171,7 @@ GET /?wsdl
 Exemple :
 
 ```text
-http://localhost:8000/?wsdl
+http://https://codesoap.onrender.com/?wsdl
 ```
 
 ---
