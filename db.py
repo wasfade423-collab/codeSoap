@@ -56,6 +56,25 @@ def creer_dossier(reference_metier, statut, type_operation):
     cursor = None
     try:
         cursor = connection.cursor()
+        
+        cursor.execute("""
+            SELECT EXISTS (
+                SELECT FROM information_schema.tables 
+                WHERE table_name = 'dossiers'
+            );
+        """)
+        table_existe = cursor.fetchone()[0]
+        
+        if not table_existe:
+            cursor.execute("""
+                CREATE TABLE dossiers (
+                    id SERIAL PRIMARY KEY,
+                    reference_metier VARCHAR(255) NOT NULL UNIQUE,
+                    statut VARCHAR(50) NOT NULL,
+                    type_operation VARCHAR(100) NOT NULL
+                );
+            """)
+        
         requete = "INSERT INTO dossiers (reference_metier, statut, type_operation) VALUES (%s, %s, %s);"
         cursor.execute(requete, (reference_metier, statut, type_operation))
         connection.commit()
