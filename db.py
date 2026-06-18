@@ -47,3 +47,32 @@ def obtenir_dossier(reference_metier):
     finally:
         if cursor: cursor.close()
         if connection: connection.close()
+        
+    def creer_dossier(reference_metier, statut, type_operation):
+        connection = get_db_connection()
+        if not connection:
+            return "<soapenv:Fault><faultstring>Erreur de connexion a la base de donnees</faultstring></soapenv:Fault>"
+        
+        cursor = None
+        try:
+            cursor = connection.cursor()
+            requete = "INSERT INTO dossiers (reference_metier, statut, type_operation) VALUES (%s, %s, %s);"
+            cursor.execute(requete, (reference_metier, statut, type_operation))
+            connection.commit()
+            
+            body_content = """
+            <smart:CreateDossierResponse>
+            <success>true</success>
+            <message>Dossier insere avec succes</message>
+            </smart:CreateDossierResponse>
+            """
+            return templates.SOAP_SUCCESS_RESPONSE.format(body_content=body_content)
+                
+        except Exception as e:
+            connection.rollback()
+            print(f"Erreur SQL INSERT : {e}")
+            return f"<soapenv:Fault><faultstring>Erreur d insertion : {str(e)}</faultstring></soapenv:Fault>"
+            
+        finally:
+            if cursor: cursor.close()
+            if connection: connection.close()
