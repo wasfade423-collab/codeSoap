@@ -9,8 +9,7 @@ class SOAPHandler(BaseHTTPRequestHandler):
     def do_GET(self):
         if self.path == '/' or '?wsdl' in self.path:
             self.send_response(200)
-            # text/plain force le navigateur à afficher le texte brut sans générer d'erreur de parsing
-            self.send_header('Content-Type', 'text/plain; charset=utf-8')
+            self.send_header('Content-Type', 'application/xml; charset=utf-8')
             self.end_headers()
             
             clean_wsdl = templates.WSDL_CONTENT.strip()
@@ -25,10 +24,25 @@ class SOAPHandler(BaseHTTPRequestHandler):
         post_data = self.rfile.read(content_length).decode('utf-8')
         soap_action = self.headers.get('SOAPAction', '')
 
-        if "GetDossier" in post_data or "GetDossier" in soap_action:
-            response_xml = services.handle_get_dossier(post_data)
-        else:
-            response_xml = templates.SOAP_SUCCESS_RESPONSE.format(body_content="<error>Unknown Action</error>")
+        try:
+            if "GetDossier" in post_data or "GetDossier" in soap_action:
+                response_xml = services.handle_get_dossier(post_data)
+            else:
+                response_xml = templates.SOAP_SUCCESS_RESPONSE.format(body_content="<error>Unknown Action</error>")
+        except Exception as e:
+            print(f"Erreur d execution : {e}")
+            response_xml = f"""<?xml version="1.0" encoding="UTF-8"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+   <soapenv:Body>
+      <soapenv:Fault>
+         <faultcode>soapenv:Server</faultcode>
+         <faultstring>Erreur interne lors du traitement de la requete.</faultstring>
+         <detail>
+            <exception>{str(e)}</exception>
+         </detail>
+      </soapenv:Fault>
+   </soapenv:Body>
+</soapenv:Envelope>"""
 
         self.send_response(200)
         self.send_header("Content-Type", "text/xml; charset=utf-8")
