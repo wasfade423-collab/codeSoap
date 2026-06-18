@@ -1,185 +1,357 @@
+
 <!doctype html>
 <html lang="fr">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SmartPort Gateway - Documentation API SOAP</title>
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <title>Documentation - SmartPort Gateway API SOAP</title>
+
     <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family:
+          Segoe UI,
+          sans-serif;
+      }
+
+      body {
+        background: #f4f7fa;
+        color: #333;
+        line-height: 1.6;
+      }
+
+      header {
+        background: #0d6efd;
+        color: white;
+        padding: 40px;
+        text-align: center;
+      }
+
+      header h1 {
+        margin-bottom: 10px;
+      }
+
+      .container {
+        width: 90%;
+        max-width: 1200px;
+        margin: 30px auto;
+      }
+
+      .card {
+        background: white;
+        padding: 25px;
+        margin-bottom: 20px;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      h2 {
+        color: #0d6efd;
+        margin-bottom: 15px;
+      }
+
+      ul {
+        margin-left: 20px;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 15px;
+      }
+
+      table th,
+      table td {
+        border: 1px solid #ddd;
+        padding: 12px;
+        text-align: left;
+      }
+
+      table th {
+        background: #0d6efd;
+        color: white;
+      }
+
       pre {
-        background-color: #1e293b;
-        color: #f8fafc;
-        padding: 1rem;
-        border-radius: 0.5rem;
-        overflow-x: auto;
-        font-family: monospace;
+        background: #1e1e1e;
+        color: #f8f8f2;
+        padding: 15px;
+        border-radius: 8px;
+        overflow: auto;
+        margin-top: 10px;
       }
+
       code {
-        font-family: monospace;
-        color: #db2777;
+        font-family: Consolas, monospace;
       }
-      pre code {
-        color: #f8fafc;
+
+      .endpoint {
+        background: #e9f2ff;
+        border-left: 5px solid #0d6efd;
+        padding: 15px;
+        margin-top: 15px;
+        border-radius: 5px;
+      }
+
+      footer {
+        text-align: center;
+        padding: 20px;
+        margin-top: 30px;
+        background: #0d6efd;
+        color: white;
+      }
+
+      .badge {
+        display: inline-block;
+        background: #198754;
+        color: white;
+        padding: 5px 10px;
+        border-radius: 5px;
+        margin-top: 10px;
       }
     </style>
   </head>
-  <body class="bg-gray-50 text-gray-800 font-sans">
-    <header class="bg-blue-900 text-white py-8 shadow-md">
-      <div class="max-w-5xl mx-auto px-4">
-        <h1 class="text-3xl font-bold">SmartPort Gateway</h1>
-        <p class="text-blue-200 mt-2">
-          Documentation Technique Officielle - API SOAP (Python Pur)
-        </p>
-      </div>
+  <body>
+    <header>
+      <h1>🚢 SmartPort Gateway</h1>
+      <p>Documentation officielle de l'API SOAP</p>
+      <span class="badge">Version 1.0</span>
     </header>
 
-    <main
-      class="max-w-5xl mx-auto px-4 py-8 grid grid-cols-1 md:grid-cols-4 gap-8"
-    >
-      <nav class="md:col-span-1 space-y-2">
-        <h3 class="font-bold text-gray-900 uppercase text-sm tracking-wider">
-          Sommaire
-        </h3>
-        <a href="#introduction" class="block text-blue-700 hover:underline py-1"
-          >1. Introduction</a
-        >
-        <a href="#architecture" class="block text-blue-700 hover:underline py-1"
-          >2. Architecture du code</a
-        >
-        <a href="#endpoints" class="block text-blue-700 hover:underline py-1"
-          >3. Endpoints & Services</a
-        >
-        <a href="#securite" class="block text-blue-700 hover:underline py-1"
-          >4. Sécurité & Audit</a
-        >
-      </nav>
+    <div class="container">
+      <section class="card">
+        <h2>📌 Présentation</h2>
+        <p>
+          SmartPort Gateway est une API SOAP développée en Python permettant la
+          gestion et le suivi des dossiers de transit portuaire. Les données
+          sont stockées dans une base PostgreSQL hébergée sur Render.
+        </p>
+      </section>
 
-      <section class="md:col-span-3 space-y-12">
-        <div id="introduction" class="scroll-mt-6">
-          <h2 class="text-2xl font-bold text-blue-900 border-b pb-2mb-4">
-            1. Introduction
-          </h2>
-          <p class="mt-4 leading-relaxed text-gray-700">
-            Cette API SOAP constitue le canal d'intégration synchrone pour les
-            partenaires externes du Port Autonome de Cotonou. Développée
-            intégralement en Python 3 à l'aide de la bibliothèque standard, elle
-            garantit une empreinte mémoire minimale et une exécution hautement
-            sécurisée sans framework tiers.
-          </p>
+      <section class="card">
+        <h2>🚀 Fonctionnalités</h2>
+        <ul>
+          <li>Création de dossiers de transit</li>
+          <li>Consultation de dossiers</li>
+          <li>Suivi du statut des dossiers</li>
+          <li>Génération automatique du WSDL</li>
+          <li>Gestion des réponses SOAP XML</li>
+          <li>Création automatique de la base de données</li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <h2>🏗️ Architecture du Projet</h2>
+
+        <table>
+          <tr>
+            <th>Fichier</th>
+            <th>Rôle</th>
+          </tr>
+
+          <tr>
+            <td>server.py</td>
+            <td>Serveur HTTP et gestion des requêtes SOAP</td>
+          </tr>
+
+          <tr>
+            <td>services.py</td>
+            <td>Logique métier et traitement XML</td>
+          </tr>
+
+          <tr>
+            <td>db.py</td>
+            <td>Connexion PostgreSQL et requêtes SQL</td>
+          </tr>
+
+          <tr>
+            <td>templates.py</td>
+            <td>Templates XML SOAP et contrat WSDL</td>
+          </tr>
+        </table>
+      </section>
+
+      <section class="card">
+        <h2>🗄️ Structure de la Base de Données</h2>
+
+        <pre><code>
+CREATE TABLE dossiers (
+    id SERIAL PRIMARY KEY,
+    reference_metier VARCHAR(255) NOT NULL UNIQUE,
+    statut VARCHAR(50) NOT NULL,
+    type_operation VARCHAR(100) NOT NULL
+);
+</code></pre>
+
+        <table>
+          <tr>
+            <th>Champ</th>
+            <th>Description</th>
+          </tr>
+
+          <tr>
+            <td>id</td>
+            <td>Identifiant unique</td>
+          </tr>
+
+          <tr>
+            <td>reference_metier</td>
+            <td>Référence métier du dossier</td>
+          </tr>
+
+          <tr>
+            <td>statut</td>
+            <td>État actuel du dossier</td>
+          </tr>
+
+          <tr>
+            <td>type_operation</td>
+            <td>Type d'opération portuaire</td>
+          </tr>
+        </table>
+      </section>
+
+      <section class="card">
+        <h2>📄 Accès au WSDL</h2>
+
+        <pre><code>
+GET /?wsdl
+</code></pre>
+
+        <p>
+          Cette route permet aux clients SOAP de récupérer automatiquement le
+          contrat WSDL du service.
+        </p>
+      </section>
+
+      <section class="card">
+        <h2>🔗 Services SOAP</h2>
+
+        <div class="endpoint">
+          <h3>CreateDossier</h3>
+
+          <p>Création d'un nouveau dossier de transit.</p>
+
+          <table>
+            <tr>
+              <th>Paramètre</th>
+              <th>Type</th>
+            </tr>
+
+            <tr>
+              <td>reference_metier</td>
+              <td>String</td>
+            </tr>
+
+            <tr>
+              <td>statut</td>
+              <td>String</td>
+            </tr>
+
+            <tr>
+              <td>type_operation</td>
+              <td>String</td>
+            </tr>
+          </table>
         </div>
 
-        <div id="architecture" class="scroll-mt-6">
-          <h2 class="text-2xl font-bold text-blue-900 border-b pb-2 mb-4">
-            2. Architecture du code
-          </h2>
-          <p class="mb-4 text-gray-700">
-            Le projet est structuré de manière modulaire autour de six
-            composants applicatifs fondamentaux :
-          </p>
-          <ul class="list-disc pl-6 space-y-2 text-gray-700">
-            <li>
-              <strong>config.py</strong> : Centralisation des configurations de
-              variables d'environnement.
-            </li>
-            <li>
-              <strong>db.py</strong> : Gestionnaire de l'instance de connexion
-              au SGBD MySQL.
-            </li>
-            <li>
-              <strong>server.py</strong> : Serveur d'écoute HTTP de bas niveau
-              et aiguillage des requêtes.
-            </li>
-            <li>
-              <strong>services.py</strong> : Analyseur XML de payloads et
-              exécution des requêtes métiers SQL.
-            </li>
-            <li>
-              <strong>templates.py</strong> : Schémas de structures XML et
-              dictionnaire WSDL.
-            </li>
-            <li>
-              <strong>requirements.txt</strong> : Manifeste de dépendance unique
-              pour le pilote de base de données.
-            </li>
-          </ul>
-        </div>
+        <div class="endpoint">
+          <h3>GetDossier</h3>
 
-        <div id="endpoints" class="scroll-mt-6">
-          <h2 class="text-2xl font-bold text-blue-900 border-b pb-2 mb-4">
-            3. Endpoints & Services
-          </h2>
+          <p>Consultation d'un dossier existant.</p>
 
-          <div
-            class="bg-white p-6 rounded-lg shadow-sm border border-gray-200 space-y-4"
-          >
-            <h3 class="text-xl font-semibold text-gray-900">
-              Service : Consultation de Dossier (GetDossier)
-            </h3>
-            <p class="text-gray-700">
-              Extrait les détails d'un dossier de fret à partir de sa référence
-              unique.
-            </p>
+          <table>
+            <tr>
+              <th>Paramètre</th>
+              <th>Type</th>
+            </tr>
 
-            <div class="grid grid-cols-2 gap-4 text-sm bg-gray-100 p-4 rounded">
-              <div><strong>Méthode HTTP:</strong> POST</div>
-              <div><strong>URL Endpoint:</strong> http://localhost:8000/</div>
-              <div>
-                <strong>Header 1:</strong> Content-Type: text/xml; charset=utf-8
-              </div>
-              <div><strong>Header 2:</strong> SOAPAction: GetDossier</div>
-            </div>
-
-            <h4 class="font-medium text-gray-900 mt-4">
-              Structure de la Requête XML
-            </h4>
-            <pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:smart="http://smartport.lacotonou.bj/"&gt;
-   &lt;soapenv:Header/&gt;
-   &lt;soapenv:Body&gt;
-      &lt;smart:GetDossierRequest&gt;
-         &lt;reference_metier&gt;DOS-2026-XYZ&lt;/reference_metier&gt;
-      &lt;/smart:GetDossierRequest&gt;
-   &lt;/soapenv:Body&gt;
-&lt;/soapenv:Envelope&gt;</code></pre>
-
-            <h4 class="font-medium text-gray-900 mt-4">
-              Structure de la Réponse XML (Succès)
-            </h4>
-            <pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:smart="http://smartport.lacotonou.bj/"&gt;
-   &lt;soapenv:Header/&gt;
-   &lt;soapenv:Body&gt;
-      &lt;smart:GetDossierResponse&gt;
-         &lt;id&gt;a1b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6d&lt;/id&gt;
-         &lt;statut&gt;valide&lt;/statut&gt;
-         &lt;type_operation&gt;import&lt;/type_operation&gt;
-      &lt;/smart:GetDossierResponse&gt;
-   &lt;/soapenv:Body&gt;
-&lt;/soapenv:Envelope&gt;</code></pre>
-          </div>
-        </div>
-
-        <div id="securite" class="scroll-mt-6">
-          <h2 class="text-2xl font-bold text-blue-900 border-b pb-2 mb-4">
-            4. Sécurité & Audit
-          </h2>
-          <p class="leading-relaxed text-gray-700">
-            L'architecture logicielle applique les préceptes du modèle
-            Zero-Trust. L'analyse syntaxique du XML utilise de façon restrictive
-            le module <code>xml.etree.ElementTree</code> natif, configuré
-            intrinsèquement pour rejeter les résolutions d'entités externes XML
-            (XXE Vulnerabilities). Toute action initiée via le canal SOAP
-            consigne l'empreinte de la transaction de manière séquentielle et
-            immuable au sein du journal d'audit de la base de données.
-          </p>
+            <tr>
+              <td>reference_metier</td>
+              <td>String</td>
+            </tr>
+          </table>
         </div>
       </section>
-    </main>
 
-    <footer
-      class="bg-gray-900 text-gray-400 py-6 mt-12 border-t border-gray-800 text-center text-sm"
-    >
-      <p>&copy; 2026 Port Autonome de Cotonou - Tous droits réservés.</p>
+      <section class="card">
+        <h2>📬 Exemple de Requête SOAP</h2>
+
+        <pre><code>
+&lt;soapenv:Envelope
+xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"&gt;
+
+    &lt;soapenv:Body&gt;
+
+        &lt;CreateDossierRequest&gt;
+
+            &lt;reference_metier&gt;REF001&lt;/reference_metier&gt;
+            &lt;statut&gt;EN_COURS&lt;/statut&gt;
+            &lt;type_operation&gt;IMPORT&lt;/type_operation&gt;
+
+        &lt;/CreateDossierRequest&gt;
+
+    &lt;/soapenv:Body&gt;
+
+&lt;/soapenv:Envelope&gt;
+</code></pre>
+      </section>
+
+      <section class="card">
+        <h2>📤 Exemple de Réponse SOAP</h2>
+
+        <pre><code>
+&lt;soapenv:Envelope
+xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"&gt;
+
+    &lt;soapenv:Body&gt;
+
+        &lt;CreateDossierResponse&gt;
+
+            &lt;message&gt;
+                Dossier créé avec succès
+            &lt;/message&gt;
+
+        &lt;/CreateDossierResponse&gt;
+
+    &lt;/soapenv:Body&gt;
+
+&lt;/soapenv:Envelope&gt;
+</code></pre>
+      </section>
+
+      <section class="card">
+        <h2>🛡️ Gestion des Erreurs</h2>
+
+        <ul>
+          <li>Référence métier déjà existante</li>
+          <li>Données XML invalides</li>
+          <li>Erreur PostgreSQL</li>
+          <li>Requête SOAP mal formée</li>
+          <li>Erreur interne du serveur</li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <h2>🧰 Technologies Utilisées</h2>
+
+        <ul>
+          <li>Python</li>
+          <li>SOAP</li>
+          <li>XML</li>
+          <li>PostgreSQL</li>
+          <li>Render</li>
+          <li>HTTP Server Python</li>
+        </ul>
+      </section>
+    </div>
+
+    <footer>
+      <p>Développé par Groupe 1 © 2026</p>
+      <p>Supervisé par MR Osias TOSSOU</p>
     </footer>
   </body>
 </html>
+```
