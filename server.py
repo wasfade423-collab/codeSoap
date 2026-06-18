@@ -1,0 +1,38 @@
+import os
+from http.server import HTTPServer, BaseHTTPRequestHandler
+import services
+import templates
+
+PORT = int(os.environ.get('PORT', 8000))
+
+class SOAPHandler(BaseHTTPRequestHandler):
+    def do_GET(self):
+        if "?wsdl" in self.path:
+            self.send_response(200)
+            self.send_header("Content-Type", "text/xml; charset=utf-8")
+            self.end_headers()
+            self.wfile.write(templates.WSDL_CONTENT.encode('utf-8'))
+        else:
+            self.send_error(404, "Not Found")
+
+    def do_POST(self):
+        content_length = int(self.headers['Content-Length'])
+        post_data = self.rfile.read(content_length).decode('utf-8')
+        soap_action = self.headers.get('SOAPAction', '')
+
+        if "GetDossier" in post_data or "GetDossier" in soap_action:
+            response_xml = services.handle_get_dossier(post_data)
+        else:
+            response_xml = templates.SOAP_SUCCESS_RESPONSE.format(body_content="<error>Unknown Action</error>")
+
+        self.send_response(200)
+        self.send_header("Content-Type", "text/xml; charset=utf-8")
+        self.end_headers()
+        self.wfile.write(response_xml.encode('utf-8'))
+
+if __name__ == '__main__':
+    server = HTTPServer(('0.0.0.0', PORT), SOAPHandler)
+    try:
+        server.serve_forever()
+    except KeyboardInterrupt:
+        server.server_close()
