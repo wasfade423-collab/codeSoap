@@ -7,13 +7,20 @@ PORT = int(os.environ.get('PORT', 8000))
 
 class SOAPHandler(BaseHTTPRequestHandler):
     def do_GET(self):
-        if "?wsdl" in self.path:
+        if self.path == '/' or self.path == '/?wsdl':
             self.send_response(200)
-            self.send_header("Content-Type", "text/xml; charset=utf-8")
+            # On indique bien au navigateur que c'est du XML
+            self.send_header('Content-Type', 'application/xml; charset=utf-8')
             self.end_headers()
-            self.wfile.write(templates.WSDL_CONTENT.encode('utf-8'))
+            
+            # .strip() supprime les espaces et sauts de ligne invisibles au début et à la fin
+            clean_wsdl = templates.WSDL_CONTENT.strip()
+            
+            self.wfile.write(clean_wsdl.encode('utf-8'))
         else:
-            self.send_error(404, "Not Found")
+            self.send_response(404)
+            self.end_headers()
+            self.wfile.write(b"Non trouve")
 
     def do_POST(self):
         content_length = int(self.headers['Content-Length'])
